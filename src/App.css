@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -14,29 +13,73 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
 .card {
-  padding: 2em;
+  padding: 0.5em;
+  box-shadow: 0 0 1em #3e10aa;
+  border-radius: 5px;
+  background: linear-gradient(rgba(62, 16, 170, 0.9), rgba(62, 16, 170, 0.9));
+  position: relative;
+  width: auto;
 }
 
-.read-the-docs {
-  color: #888;
+#discordForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  width: auto;
+}
+
+#discordForm input {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border-radius: 5px;
+  border: 1px solid #646cff;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.25s;
+}
+
+.text-field {
+  width: -webkit-fill-available;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+#submitButton {
+  margin: 1em 0 0 0 !important;
+  box-shadow: 0 0 1em #646cff;
+  border: 1px solid #646cff;
+  color: #646cff !important;
+  background-color: #c4caff;
+  font-size: 1.20em !important;
+}
+
+#submitButton:hover {
+  box-shadow: 0 0 1em #646cffaa;
+  border: 1px solid #646cffaa;
+  color: #fff !important;
+  background-color: #646cff;
+  cursor: pointer;
+}
+
+#roles {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.required {
+  color: #ff0000;
 }
