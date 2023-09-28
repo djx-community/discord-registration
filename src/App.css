@@ -17,7 +17,7 @@
 
 .card {
   padding: 0.5em;
-  box-shadow: 0 0 1em #35089f;
+  box-shadow: 0 0 0.5em #35089f;
   border-radius: 5px;
   background: #35089f;
   position: relative;
@@ -38,7 +38,8 @@
   padding: 0.5em;
   border-radius: 5px;
   border: 1px solid #646cff;
-  color: #fff;
+  background-color: #c4caff;
+  color: #35089f;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -54,19 +55,21 @@
   flex-direction: column;
   align-items: start;
   width: 100%;
+  position: relative;
 }
 
 #submitButton {
   margin: 1em 0 0 0 !important;
-  box-shadow: 0 0 1em #35089f;
+  box-shadow: 0 0 0.25em #c4caff;
   border: 1px solid #35089f;
   color: #35089f !important;
   background-color: #c4caff;
   font-size: 1.20em !important;
+  width: 100%;
 }
 
 #submitButton:hover {
-  box-shadow: 0 0 1em #35089f;
+  box-shadow: 0 0 0.25em #35089f;
   border: 1px solid #35089f;
   color: #fff !important;
   background-color: #646cff;
@@ -84,6 +87,19 @@
 .required {
   color: #ff0000;
 }
+
+.error {
+  color: #ff0000;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: end;
+  margin-bottom: 0.25em;
+  margin-right: 0.25em;
+}
+
+/* Bg Animation */
 
 @keyframes animate {
   0% {
