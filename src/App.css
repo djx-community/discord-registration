@@ -17,7 +17,7 @@
 
 .card {
   padding: 0.5em;
-  box-shadow: 0 0 0.5em #35089f;
+  box-shadow: 0 0 0.25em #35089f;
   border-radius: 5px;
   background: #35089f;
   position: relative;
