@@ -5,11 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background:
-    conic-gradient(#242424 25%, #0000 0) 0 0/calc(2*15px) calc(15px/9.5),
-    conic-gradient(#242424 25%, #0000 0) 0 0/calc(15px/9.5) calc(2*15px),
-    repeating-conic-gradient(#0000 0 25%, #242424 0 50%) 15px 0 /calc(2*15px) calc(2*15px),
-    radial-gradient(50% 50%, #000000 98%, #242424) 0 0/15px 15px;
+  background: #040029;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

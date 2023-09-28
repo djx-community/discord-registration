@@ -64,7 +64,6 @@ const App: React.FC = () => {
   }
 
   React.useEffect(() => {
-    console.log(formErrors)
     Object.keys(formState).forEach(key => {
       const element = document.getElementById(key)
       if (element && formErrors[key as keyof FormState]) {
