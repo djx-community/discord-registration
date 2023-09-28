@@ -10,7 +10,8 @@ export interface RegisterUser {
 
 export const API = {
     register: async (user: RegisterUser) => {
-        const res = await fetch('http://localhost:42069/users/register', {
+        const BASE_URL = import.meta.env.VITE_APP_API
+        const res = await fetch(BASE_URL + '/users/register', {
             method: 'POST',
             mode: 'cors',
             credentials: 'same-origin',
