@@ -1,6 +1,7 @@
 import React from 'react'
-import { object, string, email, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
+import { object, string, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
 import './App.css'
+import { API } from './utils/api'
 
 const App: React.FC = () => {
 
@@ -8,7 +9,6 @@ const App: React.FC = () => {
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
     discordId: string("Discord username must be a string", [minLength(1, "Please enter your discord ID")]),
     mobileNumber: string("Your mobile must be a number", [regex(/^\d{10}$/, "Please enter a valid mobile number")]),
-    email: optional(string("Email must be a string", [email("Please enter a valid email")])),
     github: optional(string("Github must be a string", [url("enter a valid url"), startsWith('https://github.com', 'Please enter a valid github url')])),
     linkedin: optional(string("LinkedIn must be a string", [url("enter a valid url"), startsWith('https://www.linkedin.com', 'Please enter a valid linkedin url')])),
     roles: object({
@@ -23,7 +23,6 @@ const App: React.FC = () => {
     fullName: '',
     discordId: '',
     mobileNumber: '',
-    email: '',
     github: '',
     linkedin: '',
     roles: {
@@ -58,8 +57,18 @@ const App: React.FC = () => {
       setFormErrors(issues)
     } else {
       setFormErrors({})
-      console.log(result)
-      // submit form
+      API.register({
+        fullname: formState.fullName,
+        discordId: formState.discordId,
+        phone: Number(formState.mobileNumber),
+        github: formState.github,
+        linkedin: formState.linkedin,
+        tech: Object.keys(formState.roles).filter(key => formState.roles[key as keyof FormState['roles']])
+      }).then((res) => {
+        alert(res?.message || 'Successfully registered')
+      }).catch((err) => {
+        alert(err || 'Something went wrong. Please try again later')
+      })
     }
   }
 
@@ -67,7 +76,7 @@ const App: React.FC = () => {
     Object.keys(formState).forEach(key => {
       const element = document.getElementById(key)
       if (element && formErrors[key as keyof FormState]) {
-        element.classList.add('input-error') 
+        element.classList.add('input-error')
       } else if (element) {
         element.classList.remove('input-error')
       }
@@ -113,13 +122,13 @@ const App: React.FC = () => {
               />
               {formErrors.mobileNumber && <span className='error'>{formErrors.mobileNumber}</span>}
             </div>
-            <div className='form-item'>
+            {/* <div className='form-item'>
               <label htmlFor="email">Email</label>
               <input className='text-field' type="email" name="email" id="email"
                 value={formState.email} onChange={e => setFormState({ ...formState, email: e.target.value })}
               />
               {formErrors.email && <span className='error'>{formErrors.email}</span>}
-            </div>
+            </div> */}
             <div className='form-item'>
               <label htmlFor="github">Github</label>
               <input className='text-field' type="url" name="github" id="github"
