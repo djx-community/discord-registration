@@ -6,7 +6,7 @@ const App: React.FC = () => {
 
   const formSchema = object({
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
-    discordId: string("Discord username must be a string", [minLength(1, "Please enter your discord username")]),
+    discordId: string("Discord username must be a string", [minLength(1, "Please enter your discord ID")]),
     mobileNumber: string("Your mobile must be a number", [regex(/^\d{10}$/, "Please enter a valid mobile number")]),
     email: optional(string("Email must be a string", [email("Please enter a valid email")])),
     github: optional(string("Github must be a string", [url("enter a valid url"), startsWith('https://github.com', 'Please enter a valid github url')])),
@@ -42,7 +42,7 @@ const App: React.FC = () => {
     e.preventDefault()
     let form: FormState = { ...formState }
     Object.keys(formState).forEach(key => {
-      if (!['fullName', 'discordUsername', 'mobileNumber'].includes(key) && formState[key as keyof FormState] === '') {
+      if (!['fullName', 'discordId', 'mobileNumber'].includes(key) && formState[key as keyof FormState] === '') {
         form = { ...form, [key]: undefined }
       }
     })
@@ -63,6 +63,16 @@ const App: React.FC = () => {
     }
   }
 
+  React.useEffect(() => {
+    console.log(formErrors)
+    Object.keys(formErrors).forEach(key => {
+      const element = document.getElementById(key)
+      if (element) {
+        element.classList.add('input-error')
+      }
+    })
+  }, [formErrors])
+
   return (
     <>
       <ul className="background">
@@ -82,22 +92,22 @@ const App: React.FC = () => {
         <div className='card'>
           <form id='discordForm' onSubmit={submitHandler}>
             <div className='form-item'>
-              <label htmlFor="name">Full Name<span className='required'>*</span></label>
-              <input className='text-field' type="text" name="fname" id="fname"
+              <label htmlFor="fullName">Full Name<span className='required'>*</span></label>
+              <input className='text-field' type="text" name="fullName" id="fullName"
                 value={formState.fullName} onChange={e => setFormState({ ...formState, fullName: e.target.value })}
               />
               {formErrors.fullName && <span className='error'>{formErrors.fullName}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="discord">Discord Username<span className='required'>*</span></label>
-              <input className='text-field' type="text" name="discord" id="discord"
+              <label htmlFor="discordId">Discord ID<span className='required'>*</span></label>
+              <input className='text-field' type="text" name="discordId" id="discordId"
                 value={formState.discordId} onChange={e => setFormState({ ...formState, discordId: e.target.value })}
               />
               {formErrors.discordId && <span className='error'>{formErrors.discordId}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="mobileNo">Mobile Number<span className='required'>*</span></label>
-              <input className='text-field' type="text" name="mobileNo" id="mobileNo"
+              <label htmlFor="mobileNumber">Mobile Number<span className='required'>*</span></label>
+              <input className='text-field' type="text" name="mobileNumber" id="mobileNumber"
                 value={formState.mobileNumber} onChange={e => setFormState({ ...formState, mobileNumber: e.target.value })}
               />
               {formErrors.mobileNumber && <span className='error'>{formErrors.mobileNumber}</span>}

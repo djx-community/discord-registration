@@ -90,13 +90,17 @@
 
 .error {
   color: #ff0000;
-  width: 100%;
   position: absolute;
   bottom: 0;
   right: 0;
   text-align: end;
   margin-bottom: 0.25em;
   margin-right: 0.25em;
+}
+
+.input-error {
+  border: 1px solid #ff0000 !important;
+  box-shadow: 0 0 0.5em #ff0000;
 }
 
 /* Bg Animation */
