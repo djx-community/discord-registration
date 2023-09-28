@@ -3,7 +3,12 @@ import { object, string, boolean, Output, optional, minLength, url, regex, start
 import './App.css'
 import { API } from './utils/api'
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const App: React.FC = () => {
+
+  const MySwal = withReactContent(Swal)
 
   const formSchema = object({
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
@@ -64,10 +69,27 @@ const App: React.FC = () => {
         github: formState.github,
         linkedin: formState.linkedin,
         tech: Object.keys(formState.roles).filter(key => formState.roles[key as keyof FormState['roles']])
-      }).then((res) => {
-        alert(res?.message || 'Successfully registered')
+      }).then(async (res) => {
+        if (res?.status === 200) {
+          MySwal.fire({
+            title: <p>{res?.message ?? 'Successfully registered!!'}</p>,
+            icon: 'success'
+          }).then(() => {
+            window.location.assign('https://discord.com/invite/g9ZEnxsWDz')
+          })
+        } else {
+          const response = await res.json()
+          MySwal.fire({
+            title: <p>{response?.message ?? 'Something went wrong. Please try again later!'}</p>,
+            icon: 'error'
+          })
+        }
       }).catch((err) => {
-        alert(err || 'Something went wrong. Please try again later')
+        console.log(err)
+        MySwal.fire({
+          title: <p>{err || 'Something went wrong. Please try again later!'}</p>,
+          icon: 'error' 
+        })
       })
     }
   }

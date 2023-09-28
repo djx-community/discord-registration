@@ -20,8 +20,10 @@ export const API = {
             },
             body: JSON.stringify(user),
         })
-            .then(res => res.json())
-            .catch(err => {
+            .then((res) => {
+                return res
+            })
+            .catch((err) => {
                 console.log(err)
                 return err
             })
