@@ -9,6 +9,7 @@ import withReactContent from 'sweetalert2-react-content'
 const App: React.FC = () => {
 
   const MySwal = withReactContent(Swal)
+  const [loading, setLoading] = React.useState(false)
 
   const formSchema = object({
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
@@ -44,6 +45,7 @@ const App: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setLoading(true)
     let form: FormState = { ...formState }
     Object.keys(formState).forEach(key => {
       if (!['fullName', 'discordId', 'mobileNumber'].includes(key) && formState[key as keyof FormState] === '') {
@@ -60,6 +62,7 @@ const App: React.FC = () => {
         }
       }
       setFormErrors(issues)
+      setLoading(false)
     } else {
       setFormErrors({})
       API.register({
@@ -70,6 +73,7 @@ const App: React.FC = () => {
         linkedin: formState.linkedin,
         tech: Object.keys(formState.roles).filter(key => formState.roles[key as keyof FormState['roles']])
       }).then(async (res) => {
+        setLoading(false)
         if (res?.status === 200) {
           MySwal.fire({
             title: <p>{res?.message ?? 'Successfully registered!!'}</p>,
@@ -90,6 +94,7 @@ const App: React.FC = () => {
           title: <p>{err || 'Something went wrong. Please try again later!'}</p>,
           icon: 'error' 
         })
+        setLoading(false)
       })
     }
   }
@@ -122,7 +127,7 @@ const App: React.FC = () => {
       <div style={{ width: 'auto' }}>
         <h1 style={{ position: 'relative' }}>DJX Community Registration 🚀</h1>
         <div className='card'>
-          <form id='discordForm' onSubmit={submitHandler}>
+          <form id='discordForm' onSubmit={submitHandler} autoComplete='off'>
             <div className='form-item'>
               <label htmlFor="fullName">Full Name<span className='required'>*</span></label>
               <input className='text-field' type="text" name="fullName" id="fullName"
@@ -184,7 +189,7 @@ const App: React.FC = () => {
             <input type="checkbox" name="tandc" id="tandc" /> I agree to the <a href="#">Terms and Conditions</a>
           </div> */}
             <div className='form-item'>
-              <input id='submitButton' type="submit" value="Submit" />
+              <input id='submitButton' type="submit" value="Submit" disabled={loading}/>
             </div>
           </form>
         </div>
