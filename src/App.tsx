@@ -65,13 +65,15 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     console.log(formErrors)
-    Object.keys(formErrors).forEach(key => {
+    Object.keys(formState).forEach(key => {
       const element = document.getElementById(key)
-      if (element) {
-        element.classList.add('input-error')
+      if (element && formErrors[key as keyof FormState]) {
+        element.classList.add('input-error') 
+      } else if (element) {
+        element.classList.remove('input-error')
       }
     })
-  }, [formErrors])
+  }, [formErrors, formState])
 
   return (
     <>
