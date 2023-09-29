@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { MouseEvent, useState, useRef, useEffect } from 'react'
 import { object, string, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
 import './App.css'
 import { API } from './utils/api'
+import imageSrc from './info.png'
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -10,6 +11,10 @@ const App: React.FC = () => {
 
   const MySwal = withReactContent(Swal)
   const [loading, setLoading] = React.useState(false)
+
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const infoIconRef = useRef(null);
+  const tooltipRef = useRef(null);
 
   const formSchema = object({
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
@@ -92,12 +97,34 @@ const App: React.FC = () => {
         console.log(err)
         MySwal.fire({
           title: <p>{err || 'Something went wrong. Please try again later!'}</p>,
-          icon: 'error' 
+          icon: 'error'
         })
         setLoading(false)
       })
     }
   }
+
+  const handleIconClick = () => {
+    setTooltipVisible(!tooltipVisible);
+  }
+
+  const handleClickOutside: (event: Event) => void = (event: Event) => {
+    if (event.target instanceof Node) {
+      if (!event.target.contains(event.target) && event.target !== infoIconRef.current) {
+        setTooltipVisible(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Add a click event listener to the document when the component mounts
+    document.addEventListener('click', handleClickOutside as EventListener);
+
+    // Remove the click event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside as EventListener);
+    };
+  }, []);
 
   React.useEffect(() => {
     Object.keys(formState).forEach(key => {
@@ -109,6 +136,8 @@ const App: React.FC = () => {
       }
     })
   }, [formErrors, formState])
+
+
 
   return (
     <>
@@ -136,7 +165,12 @@ const App: React.FC = () => {
               {formErrors.fullName && <span className='error'>{formErrors.fullName}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="discordId">Discord ID<span className='required'>*</span></label>
+              <label htmlFor="discordId">Discord ID<span className='required'>*</span><span className="info-icon" onClick={handleIconClick} ref={infoIconRef}>i</span></label>
+              {tooltipVisible && (
+                <div className={`info-tooltip ${tooltipVisible ? 'visible' : ''}`} ref={tooltipRef}>
+                  <img src={imageSrc} alt="Info" />
+                </div>
+              )}
               <input className='text-field' type="text" name="discordId" id="discordId"
                 value={formState.discordId} onChange={e => setFormState({ ...formState, discordId: e.target.value })}
               />
@@ -189,7 +223,7 @@ const App: React.FC = () => {
             <input type="checkbox" name="tandc" id="tandc" /> I agree to the <a href="#">Terms and Conditions</a>
           </div> */}
             <div className='form-item'>
-              <input id='submitButton' type="submit" value="Submit" disabled={loading}/>
+              <input id='submitButton' type="submit" value="Submit" disabled={loading} />
             </div>
           </form>
         </div>
