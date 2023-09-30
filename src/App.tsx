@@ -8,6 +8,9 @@ import withReactContent from 'sweetalert2-react-content'
 
 const App: React.FC = () => {
 
+  const queryParameters = new URLSearchParams(window.location.search)
+  const discordId = queryParameters.get("discordId")
+
   const MySwal = withReactContent(Swal)
   const [loading, setLoading] = React.useState(false)
 
@@ -27,7 +30,7 @@ const App: React.FC = () => {
 
   const [formState, setFormState] = React.useState<FormState>({
     fullName: '',
-    discordId: '',
+    discordId: discordId ?? '',
     mobileNumber: '',
     github: '',
     linkedin: '',
