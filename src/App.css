@@ -235,18 +235,16 @@
   top: 7px;
   left: 5px;
   display: inline-block;
-  border-bottom: 1px dotted black;
-
 }
 
-.tooltip .tooltipimage {
+.tooltip .tooltip-image {
   visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
+  width: auto;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 0.5em;
+  background: #646cff;
+  box-shadow: 0 0 0.25em #35089f;
   
   /* Position the tooltip */
   position: absolute;
@@ -256,6 +254,6 @@
   margin-left: -60px;
 }
 
-.tooltip:hover .tooltipimage {
+.tooltip:hover .tooltip-image {
   visibility: visible;
 }

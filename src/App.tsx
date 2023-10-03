@@ -2,7 +2,8 @@ import React from 'react'
 import { object, string, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
 import './App.css'
 import { API } from './utils/api'
-import imageSrc from './info.png'
+import imageSrc from './assets/info.png'
+import infoIcon from './assets/info-icon.svg'
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -139,12 +140,12 @@ const App: React.FC = () => {
               {formErrors.fullName && <span className='error'>{formErrors.fullName}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="discordId">Discord ID<span className='required'>*</span><div className="tooltip"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 48 48">
-                <path fill="#2196f3" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M22 22h4v11h-4V22zM26.5 16.5c0 1.379-1.121 2.5-2.5 2.5s-2.5-1.121-2.5-2.5S22.621 14 24 14 26.5 15.121 26.5 16.5z"></path>
-              </svg>
-                <span className="tooltipimage"><img src={imageSrc} alt="Info" /></span>
-              </div></label>
-
+              <label htmlFor="discordId">Discord ID<span className='required'>*</span>
+                <div className="tooltip">
+                  <img src={infoIcon} alt="info-icon" />
+                  <span className="tooltip-image"><img src={imageSrc} alt="Info" /></span>
+                </div>
+              </label>
               <input className='text-field' type="text" name="discordId" id="discordId"
                 value={formState.discordId} onChange={e => setFormState({ ...formState, discordId: e.target.value })}
               />
