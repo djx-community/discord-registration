@@ -1,9 +1,8 @@
-import React, { MouseEvent, useState, useRef, useEffect } from 'react'
+import React from 'react'
 import { object, string, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
 import './App.css'
 import { API } from './utils/api'
 import imageSrc from './info.png'
-import InfoIcon from '@mui/icons-material/Info';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -12,8 +11,6 @@ const App: React.FC = () => {
 
   const MySwal = withReactContent(Swal)
   const [loading, setLoading] = React.useState(false)
-
-  const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const formSchema = object({
     fullName: string("Name must be a string", [minLength(1, 'Please enter your full name')]),
@@ -103,28 +100,6 @@ const App: React.FC = () => {
     }
   }
 
-  const handleIconClick = () => {
-    setTooltipVisible(!tooltipVisible);
-  }
-
-  // const handleClickOutside: (event: Event) => void = (event: Event) => {
-  //   if (event.target instanceof Node) {
-  //     if (!event.target.contains(event.target) && event.target !== infoIconRef.current) {
-  //       setTooltipVisible(false);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // Add a click event listener to the document when the component mounts
-  //   document.addEventListener('click', handleClickOutside as EventListener);
-
-  //   // Remove the click event listener when the component unmounts
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside as EventListener);
-  //   };
-  // }, []);
-
   React.useEffect(() => {
     Object.keys(formState).forEach(key => {
       const element = document.getElementById(key)
@@ -164,19 +139,12 @@ const App: React.FC = () => {
               {formErrors.fullName && <span className='error'>{formErrors.fullName}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="discordId">Discord ID<span className='required'>*</span><span className="info-icon" onClick={handleIconClick} ><InfoIcon  /></span></label>
-              
-              {/* <label htmlFor="discordId">Discord ID<span className='required'>*</span><span className="info-icon" onClick={handleIconClick} ref={infoIconRef}><InfoIcon  /></span></label> */}
+              <label htmlFor="discordId">Discord ID<span className='required'>*</span><div className="tooltip"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 48 48">
+                <path fill="#2196f3" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M22 22h4v11h-4V22zM26.5 16.5c0 1.379-1.121 2.5-2.5 2.5s-2.5-1.121-2.5-2.5S22.621 14 24 14 26.5 15.121 26.5 16.5z"></path>
+              </svg>
+                <span className="tooltipimage"><img src={imageSrc} alt="Info" /></span>
+              </div></label>
 
-              {tooltipVisible && (
-                <div>
-                   <img src={imageSrc} alt="Info" />
-                </div>
-                // <div className={`info-icon-image ${tooltipVisible ? 'visible' : ''}`} ref={tooltipRef}>
-                //   <img src={imageSrc} alt="Info" />
-                // </div>
-                
-              )}
               <input className='text-field' type="text" name="discordId" id="discordId"
                 value={formState.discordId} onChange={e => setFormState({ ...formState, discordId: e.target.value })}
               />

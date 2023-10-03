@@ -221,15 +221,41 @@
   animation-delay: 44s;
 }
 
-.info-icon {
+/* .info-icon {
   color: #007bff;
   cursor: pointer;
   position: relative;
   top: 7px;
   display: inline-block;
+  mix-blend-mode: normal
+} */
+
+.tooltip {
+  position: relative;
+  top: 7px;
+  left: 5px;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+
 }
 
+.tooltip .tooltipimage {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
 
-
-
-
+.tooltip:hover .tooltipimage {
+  visibility: visible;
+}
