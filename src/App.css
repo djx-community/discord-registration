@@ -221,15 +221,6 @@
   animation-delay: 44s;
 }
 
-/* .info-icon {
-  color: #007bff;
-  cursor: pointer;
-  position: relative;
-  top: 7px;
-  display: inline-block;
-  mix-blend-mode: normal
-} */
-
 .tooltip {
   position: relative;
   top: 7px;
