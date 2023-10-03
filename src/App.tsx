@@ -2,6 +2,8 @@ import React from 'react'
 import { object, string, boolean, Output, optional, minLength, url, regex, startsWith } from 'valibot'
 import './App.css'
 import { API } from './utils/api'
+import imageSrc from './assets/info.png'
+import infoIcon from './assets/info-icon.svg'
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -95,7 +97,7 @@ const App: React.FC = () => {
         console.log(err)
         MySwal.fire({
           title: <p>{err || 'Something went wrong. Please try again later!'}</p>,
-          icon: 'error' 
+          icon: 'error'
         })
         setLoading(false)
       })
@@ -112,6 +114,8 @@ const App: React.FC = () => {
       }
     })
   }, [formErrors, formState])
+
+
 
   return (
     <>
@@ -139,7 +143,12 @@ const App: React.FC = () => {
               {formErrors.fullName && <span className='error'>{formErrors.fullName}</span>}
             </div>
             <div className='form-item'>
-              <label htmlFor="discordId">Discord ID<span className='required'>*</span></label>
+              <label htmlFor="discordId">Discord ID<span className='required'>*</span>
+                <div className="tooltip">
+                  <img src={infoIcon} alt="info-icon" />
+                  <span className="tooltip-image"><img src={imageSrc} alt="Info" /></span>
+                </div>
+              </label>
               <input className='text-field' type="text" name="discordId" id="discordId"
                 value={formState.discordId} onChange={e => setFormState({ ...formState, discordId: e.target.value })}
               />
@@ -192,7 +201,7 @@ const App: React.FC = () => {
             <input type="checkbox" name="tandc" id="tandc" /> I agree to the <a href="#">Terms and Conditions</a>
           </div> */}
             <div className='form-item'>
-              <input id='submitButton' type="submit" value="Submit" disabled={loading}/>
+              <input id='submitButton' type="submit" value="Submit" disabled={loading} />
             </div>
           </form>
         </div>
